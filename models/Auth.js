@@ -8,8 +8,7 @@ const login = async(user,password,idCandidato)=>{
     sql =`SELECT * from usuarios WHERE usuario='${user}'`
     
     const consulta =await query(sql) 
-    console.log({consulta})
-    console.log('leng',consulta.length)
+    
    
     if(consulta.length>0){
         const {id,contrasena,estado,...usuario}=consulta[0]
