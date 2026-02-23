@@ -5,30 +5,30 @@ require('dotenv').config();
 
 
 
-const editarVotante=async(dni,candidato)=>{
+const editarVotante=async(dni,candidato,codusu)=>{
    var sql
    if(candidato==='1'){
     var sql = `
-    UPDATE \`votantes_jose\` SET ok= ? WHERE cedvot="${dni}"
+    UPDATE \`votantes_jose\` SET ok= ?, codusu=? WHERE cedvot="${dni}"
   `;
   }
   if(candidato==='2'){
     var sql = `
-    UPDATE \`votantes_prin\` SET ok= ? WHERE cedvot="${dni}"
+    UPDATE \`votantes_prin\` SET ok= ?, codusu=? WHERE cedvot="${dni}"
   `;
   }
   if(candidato==='3'){
     var sql = `
-    UPDATE \`votantes_elver\` SET ok= ? WHERE cedvot="${dni}"
+    UPDATE \`votantes_elver\` SET ok= ?, codusu=? WHERE cedvot="${dni}"
   `;
   }
   if(candidato==='4'){
     var sql = 
-    `UPDATE \`votantes_baq\` SET ok= ? WHERE cedvot="${dni}"`
+    `UPDATE \`votantes_baq\` SET ok= ?, codusu=? WHERE cedvot="${dni}"`
   ;
   }
    
-    const values = ['V',dni];
+    const values = ['V',codusu,dni];
     const resp= await query(sql, values);
 
     if(resp.changedRows>0){
@@ -117,11 +117,52 @@ const getVoterDni = async (dni,codlid,candidato) => {
 };
 
 
+const getAllVoterByCandidate = async (candidato) => {
+ console.log({candidato})
+  var sql
+
+  if(candidato==='1'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_jose\`
+    WHERE ok  = 'V' 
+  `;
+  }
+  if(candidato==='2'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_prin\`
+    WHERE ok  = V 
+  `;
+  }
+  if(candidato==='3'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_elver\`
+    WHERE ok  = V 
+  `;
+  }
+  if(candidato==='4'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_baq\`
+    WHERE ok  = V 
+  `;
+  }
+  
+  
+  const resp = await query(sql);
+  console.log(resp)
+  return resp;
+};
+
+
 
 module.exports={
     editarVotante,
     getVotantes,
     getVotanteId,
-    getVoterDni
+    getVoterDni,
+    getAllVoterByCandidate
    
 }
