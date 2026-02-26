@@ -132,21 +132,21 @@ const getAllVoterByCandidate = async (candidato) => {
     var sql = `
     SELECT cedvot,nomvot,apevot, ok,codusu
     FROM \`votantes_prin\`
-    WHERE ok  = V 
+    WHERE ok  = 'V' 
   `;
   }
   if(candidato==='3'){
     var sql = `
     SELECT cedvot,nomvot,apevot, ok,codusu
     FROM \`votantes_elver\`
-    WHERE ok  = V 
+    WHERE ok  = 'V'
   `;
   }
   if(candidato==='4'){
     var sql = `
     SELECT cedvot,nomvot,apevot, ok,codusu
     FROM \`votantes_baq\`
-    WHERE ok  = V 
+    WHERE ok  = 'V' 
   `;
   }
   
