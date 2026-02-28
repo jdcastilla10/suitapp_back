@@ -1,5 +1,5 @@
 const { response,request} = require('express')
-const { getVoterDni, editarVotante, getAllVoterByCandidate} = require('../models/Votantes')
+const { getVoterDni, editarVotante, getAllVoterByCandidate, votersByLeader} = require('../models/Votantes')
 
 
 const getVoterByDni=async(req=request, res=response)=> {
@@ -38,6 +38,17 @@ const getVotersByCandidate=async(req=request, res=response)=> {
     })
 }
 
+const allVoterByLeader=async(req=request, res=response)=> {
+    const { codlid,candidato } = req.query
+    
+    const resp = await votersByLeader(codlid,candidato)
+
+    res.json({
+        success:true,
+        data:resp
+    })
+}
+
 
 
 
@@ -45,6 +56,7 @@ const getVotersByCandidate=async(req=request, res=response)=> {
 module.exports = {
     getVoterByDni,
     updateVoterState,
-    getVotersByCandidate
+    getVotersByCandidate,
+    allVoterByLeader
     
 }

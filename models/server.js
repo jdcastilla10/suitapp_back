@@ -34,7 +34,7 @@ class Server {
     }
 
     lisen(){
-        const server=this.app.listen( this.port,()=>{
+        const server=this.app.listen( this.port,'0.0.0.0',()=>{
             console.log('Servidor en el puerto',this.port)
         })
         process.on('SIGINT', () => {

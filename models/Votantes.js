@@ -156,6 +156,47 @@ const getAllVoterByCandidate = async (candidato) => {
   return resp;
 };
 
+const votersByLeader = async (codlid,candidato) => {
+ 
+  var sql
+
+  if(candidato==='1'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_jose\`
+    WHERE codlid = ?
+  `;
+  }
+  if(candidato==='2'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_prin\`
+    WHERE codlid = ?
+  `;
+  }
+  if(candidato==='3'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_elver\`
+    WHERE codlid = ?
+  `;
+  }
+  if(candidato==='4'){
+    var sql = `
+    SELECT cedvot,nomvot,apevot, ok,codusu
+    FROM \`votantes_baq\`
+    WHERE codlid = ?
+  `;
+  }
+  
+
+  const values = [codlid];
+  
+  const resp = await query(sql, values);
+  console.log(resp)
+  return resp;
+};
+
 
 
 module.exports={
@@ -163,6 +204,7 @@ module.exports={
     getVotantes,
     getVotanteId,
     getVoterDni,
-    getAllVoterByCandidate
+    getAllVoterByCandidate,
+    votersByLeader
    
 }
