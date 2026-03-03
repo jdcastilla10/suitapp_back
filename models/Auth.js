@@ -11,15 +11,14 @@ const login = async(user,password,idCandidato)=>{
     
    
     if(consulta.length>0){
-        const {id,contrasena,estado,...usuario}=consulta[0]
-
-        if(estado !== '1'){
+        const {id,contrasena,...usuario}=consulta[0]
+        
+        if(usuario.estado === '4'){
             return 
         }
 
         const hashCalculado = crypto.createHash('sha1').update(password).digest('hex');
-        console.log({hashCalculado})
-        console.log({contrasena})
+        
         if(hashCalculado !==contrasena){
             return 
         }
@@ -28,8 +27,8 @@ const login = async(user,password,idCandidato)=>{
         
         const resp =await saveToken(token,id)
         const saveIdCand =await saveIdCandidato(idCandidato,id)
-        console.log({resp})
-        console.log({saveIdCand})
+       
+        console.log('hola',usuario)
         return {usuario,token} 
 
     }else{
@@ -44,15 +43,14 @@ const logout = async(user)=>{
     sql =`SELECT * from usuarios WHERE usuario='${user}'`
     
     const consulta =await query(sql)
-    console.log({consulta})
-    console.log('leng',consulta.length)
+ 
    
     if(consulta.length>0){
         const {id,...usuario}=consulta[0]
         const resp =await saveToken('',id)
         const resp2 =await updateCandidato('',id)
         if(resp.affectedRows===1){
-console.log({resp})
+
         return 'cerrada la sesion'
         } 
         

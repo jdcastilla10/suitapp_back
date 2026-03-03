@@ -21,7 +21,7 @@ const query = (sql, values = [], filters = null, paginacion = null,order)=>{
                     const conditions = Object.keys(filters).map(key => {
                         return `${key} LIKE '%${connection.escape(filters[key]).replace(/'/g, '')}%'`;
                     });
-                    console.log('condic',conditions)
+                    
                     if(conditions.length>0){
                         const hasWhere = sql.toUpperCase().includes('WHERE');
                         
@@ -30,11 +30,11 @@ const query = (sql, values = [], filters = null, paginacion = null,order)=>{
                     }
                 }
                 if(order==='DESC'){
-                    console.log(paginacion)
+                    
                     sql += ` ORDER BY id DESC`
                 }
                 if(order==='ASC'){
-                    console.log(paginacion)
+                    
                     sql += ` ORDER BY id ASC`
                 }
                
@@ -44,7 +44,7 @@ const query = (sql, values = [], filters = null, paginacion = null,order)=>{
                     sql += ` LIMIT ${paginacion[0]} OFFSET ${paginacion[1]}`
                 }
                 
-                console.log({sql,values})
+               
                 connection.query(sql, values, ( err, res) => {
          
                     if ( err ) {
